@@ -1,13 +1,18 @@
 import 'dart:async';
+import 'dart:core';
+import 'dart:core';
 import 'dart:ffi';
 import 'dart:io';
 import 'dart:typed_data';
-
+import 'package:converter/converter.dart';
+import 'package:hex/hex.dart';
+import 'package:convert/convert.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:udp/udp.dart';
+import 'package:udptest3/hex.dart';
 
 import 'easy_udp_socket_base.dart';
 
@@ -176,6 +181,33 @@ start_broadcast_client(int port) async {
       final resp = await socket.receive();
       print('Client $port received: ${resp.data}');
 
+//////////////////////////////// 바이트를 헥사로 변경 ////////////////
+
+      sleep(const Duration(
+          seconds: 3)); // 자바에서 thread.sleep(1000) 과 같은 역할 시간 딜레이주는 것.
+      List<int> cd = resp.data;
+      var abcd = resp.data;
+      var a = abcd.toString();
+
+      // var aa = hex.decode(a);
+
+      // print(aa);
+
+      // print('ee = $ee');
+      var av = a.split(', ');
+      print('abcd = $abcd');
+      print('av.split = $av');
+      var ww = hex.encode(resp.data);
+      print('ww = $ww');
+
+      // print(hex.encode(asd));
+      print(ww.toUpperCase());
+      String www = ww.toUpperCase();
+      print(www.split(''));
+      var g = www.indexOf("FB");
+      String resu = www.substring(0, g + 2);
+      print(resu);
+      convert(cd);
       // `close` method of EasyUDPSocket is awaitable.
       // await socket.close();
       print('Client $port closed');
@@ -184,13 +216,16 @@ start_broadcast_client(int port) async {
   }
 }
 
+// String byte2hex(Uint8List a) {
+//   var sb = a;
+//   for (var b in a) {sb.append(String.format()  .fromCharCodes(sb); ("%02X ", b & 0xFF));
+//   String ca = sb.toString();
+//   int g = ca.indexOf("FB"); // fa 부터 fb 까지만 출력하는 변수
+//   String resu = ca.substring(0, g + 2); // fa 부터 fb 까지만 출력하는 변수
 
-
-
-
-
-
-
+//   return resu;
+//   }
+// }
 
 // 실패
 //  var bc = Uint8List(32);
@@ -209,8 +244,6 @@ start_broadcast_client(int port) async {
 //                 );
 //                 var des = socket.listen.toString();
 //                 print('des== $des');
-
-
 
 // Datagram re = socket.receive(dataToSen, dataToSen.length);
 //                 if (re != null) {
